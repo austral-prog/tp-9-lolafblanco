@@ -1,44 +1,43 @@
-my_list= "coal", "wood", "wood", "diamond", "diamond", "diamond"
-def enumerate(my_list):
-
-    inventory = enumerate(my_list)
-    for item in inventory:
-        index, value = item
-    print(index, value)
-
-    for index, value in enumerate(my_list):
-        print(index, value)
+def create_inventory(x):
+    newdict = dict()
+    for item in x:
+        newdict[item] = x.count(item)
+    return newdict
+create_inventory(["coal", "wood", "wood", "diamond", "diamond", "diamond"])
 
 
-def add_items(map_inv, list_items, dir=1):
-    new_inv = dict()
-
-    if map_inv == {}:
-        return create_inventory(list_items)
-
-    for key in map_inv.keys():
-        for it in list_items:
-            new_inv[key] = map_inv[key]
-
-            new_inv[it] = dir * list_items.count(it) + map_inv[it] if it in map_inv else list_items.count(it)
-
-            if new_inv[it] < 0:
-                new_inv[it] = 0
-    return new_inv
+def add_items(x,y):
+    if x == {}:
+        return create_inventory(y)
+    for item in list(set(y)):
+        x[item] = y.count(item) + x[item] if item in x else y.count(item)
+    return x   
+add_items({"coal":1}, ["wood", "iron", "coal", "wood"])
 
 
-def decrement_items(inventory, items):
-    return add_items(inventory,items,-1)
+def decrement_items(x,y):
+    if x == {}:
+        return create_inventory(y)
+    for item in list(set(y)):
+        if item in x:
+            x[item] = x[item] - y.count(item)
+            if x[item] < 0:
+                x[item] = 0
+    return x
+decrement_items({"coal":2, "wood":1, "diamond":2}, ["coal", "coal", "wood", "wood", "diamond"])
 
-def remove_item(inventory, item):
-    if item in inventory.keys():
-        del inventory[item]
-    return inventory
 
-def list_inventory(dict_inv):
-    new_list = []
-    for item in dict_inv.keys():
-        if dict_inv[item] > 0:
-            new_list.append((item, dict_inv[item]))
+def remove_item(x,y):
+    if y in x:
+        del x[y]
+    return x
+remove_item({"coal":2, "wood":1, "diamond":2}, "coal")
 
-    return new_list
+
+def list_inventory(x):
+    newlist = []
+    for key in x.keys():
+        if x[key] > 0:
+            newlist.append((key, x[key]))
+    return newlist
+list_inventory({"coal":7, "wood":11, "diamond":2, "iron":7, "silver":0})

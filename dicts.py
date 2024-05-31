@@ -1,48 +1,44 @@
+my_list= "coal", "wood", "wood", "diamond", "diamond", "diamond"
+def enumerate(my_list):
 
-def create_inventory(items):
-    """Create a dict that tracks the amount (count) of each element on the `items` list.
+    inventory = enumerate(my_list)
+    for item in inventory:
+        index, value = item
+    print(index, value)
 
-    :param items: list - list of items to create an inventory from.
-    :return: dict - the inventory dictionary.
-    """
-    return {}
+    for index, value in enumerate(my_list):
+        print(index, value)
 
 
-def add_items(inventory, items):
-    """Add or increment items in inventory using elements from the items `list`.
+def add_items(map_inv, list_items, dir=1):
+    new_inv = dict()
 
-    :param inventory: dict - dictionary of existing inventory.
-    :param items: list - list of items to update the inventory with.
-    :return: dict - the inventory updated with the new items.
-    """
-    return {}
+    if map_inv == {}:
+        return create_inventory(list_items)
+
+    for key in map_inv.keys():
+        for it in list_items:
+            new_inv[key] = map_inv[key]
+
+            new_inv[it] = dir * list_items.count(it) + map_inv[it] if it in map_inv else list_items.count(it)
+
+            if new_inv[it] < 0:
+                new_inv[it] = 0
+    return new_inv
 
 
 def decrement_items(inventory, items):
-    """Decrement items in inventory using elements from the `items` list.
-
-    :param inventory: dict - inventory dictionary.
-    :param items: list - list of items to decrement from the inventory.
-    :return: dict - updated inventory with items decremented.
-    """
-    return {}
-
+    return add_items(inventory,items,-1)
 
 def remove_item(inventory, item):
-    """Remove item from inventory if it matches `item` string.
+    if item in inventory.keys():
+        del inventory[item]
+    return inventory
 
-    :param inventory: dict - inventory dictionary.
-    :param item: str - item to remove from the inventory.
-    :return: dict - updated inventory with item removed. Current inventory if item does not match.
-    """
-    return {}
+def list_inventory(dict_inv):
+    new_list = []
+    for item in dict_inv.keys():
+        if dict_inv[item] > 0:
+            new_list.append((item, dict_inv[item]))
 
-
-def list_inventory(inventory):
-    """Create a list containing all (item_name, item_count) pairs in inventory.
-
-    :param inventory: dict - an inventory dictionary.
-    :return: list of tuples - list of key, value pairs from the inventory dictionary.
-    """
-    return {}
-
+    return new_list
